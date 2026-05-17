@@ -6,7 +6,7 @@
 import SwiftUI
 
 enum Screen {
-    case splash, menu, levels, playing, victory, gameOver, pause, character, scores
+    case splash, menu, levels, playing, victory, gameOver, pause, character, scores, boss
 }
 
 struct ContentView: View {
@@ -49,6 +49,8 @@ struct ContentView: View {
                 CharacterView().transition(.opacity)
             case .scores:
                 ScoresView().transition(.opacity)
+            case .boss:
+                BossView().transition(.opacity)
             case .playing:
                 EmptyView()
             }

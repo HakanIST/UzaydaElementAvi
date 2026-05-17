@@ -5,24 +5,11 @@
 
 import SwiftUI
 
-private struct LevelInfo {
-    let id: Int
-    let name: String
-    let sub: String
-    let stars: Int
-    let color: Color
-}
-
 struct LevelSelectView: View {
     @EnvironmentObject var game: GameViewModel
 
     var body: some View {
         let pal = game.palette
-        let levels: [LevelInfo] = [
-            LevelInfo(id: 1, name: "KOZMİK KORİDOR",  sub: "Eğitim Sektörü",     stars: game.starsFor(level: 1), color: pal.accent),
-            LevelInfo(id: 2, name: "PLAZMA HOL",      sub: "Hareketli Engeller", stars: game.starsFor(level: 2), color: pal.accent2),
-            LevelInfo(id: 3, name: "KRİYO LABİRENT",  sub: "Lazer Bariyerler",   stars: game.starsFor(level: 3), color: Color(hex: 0xFF3B6B)),
-        ]
 
         ZStack {
             RadialGradient(colors: [Color(hex: 0x0D0820), Color(hex: 0x050510), Color(hex: 0x02020A)],
@@ -45,23 +32,24 @@ struct LevelSelectView: View {
                         .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white.opacity(0.12)))
                 }
 
-                Text("Sektör seç")
+                Text("Bölüm Seç")
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .padding(.top, 20)
-                Text("3 kapı, 3 bulmaca, 1 dakika.")
+                Text("Her bölümün sonunda boss savaşı!")
                     .font(.system(size: 13))
                     .foregroundColor(.white.opacity(0.55))
                     .padding(.top, 4)
 
-                VStack(spacing: 14) {
-                    ForEach(levels, id: \.id) { lv in
-                        levelCard(lv: lv)
+                ScrollView(.vertical, showsIndicators: false) {
+                    LazyVStack(spacing: 12) {
+                        ForEach(LevelConfig.all, id: \.id) { cfg in
+                            levelCard(cfg: cfg)
+                        }
                     }
+                    .padding(.top, 16)
+                    .padding(.bottom, 40)
                 }
-                .padding(.top, 24)
-
-                Spacer()
             }
             .padding(.horizontal, 24)
             .padding(.top, 80)
@@ -70,12 +58,13 @@ struct LevelSelectView: View {
     }
 
     @ViewBuilder
-    private func levelCard(lv: LevelInfo) -> some View {
-        let locked = lv.id > game.unlockedLevel
-        let baseColor = lv.color
+    private func levelCard(cfg: LevelConfig) -> some View {
+        let locked = cfg.id > game.unlockedLevel
+        let stars = game.starsFor(level: cfg.id)
+        let baseColor = Color(hex: cfg.accentHex)
 
         Button {
-            if !locked { game.pickLevel(lv.id) }
+            if !locked { game.pickLevel(cfg.id) }
         } label: {
             ZStack(alignment: .topLeading) {
                 LinearGradient(
@@ -91,35 +80,55 @@ struct LevelSelectView: View {
                     .offset(x: 230, y: -30)
                     .allowsHitTesting(false)
 
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("SEKTÖR 0\(lv.id)")
-                        .font(AppFont.mono(10, weight: .medium))
-                        .tracking(2)
-                        .foregroundColor(baseColor)
-                    Text(locked ? "🔒 KİLİTLİ" : lv.name)
-                        .font(.system(size: 19, weight: .bold))
-                        .foregroundColor(.white)
-                    Text(lv.sub)
-                        .font(.system(size: 12))
-                        .foregroundColor(.white.opacity(0.5))
-                    HStack(spacing: 4) {
-                        ForEach(0..<3, id: \.self) { i in
-                            Text("★")
-                                .font(.system(size: 18))
-                                .foregroundColor(i < lv.stars ? Color(hex: 0xFFD84D) : .white.opacity(0.18))
-                                .shadow(color: i < lv.stars ? Color(hex: 0xFFD84D) : .clear, radius: 4)
+                HStack(spacing: 14) {
+                    // Level number badge
+                    ZStack {
+                        Circle()
+                            .fill(locked ? Color.white.opacity(0.05) : baseColor.opacity(0.2))
+                            .frame(width: 44, height: 44)
+                        if locked {
+                            Image(systemName: "lock.fill")
+                                .font(.system(size: 16))
+                                .foregroundColor(.white.opacity(0.3))
+                        } else {
+                            Text("\(cfg.id)")
+                                .font(.system(size: 20, weight: .black, design: .rounded))
+                                .foregroundColor(baseColor)
                         }
                     }
-                    .padding(.top, 6)
+
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(locked ? "🔒 KİLİTLİ" : cfg.name.uppercased())
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(.white)
+                            .lineLimit(1)
+                        Text(cfg.subtitle)
+                            .font(.system(size: 11))
+                            .foregroundColor(.white.opacity(0.5))
+
+                        HStack(spacing: 3) {
+                            ForEach(0..<3, id: \.self) { i in
+                                Image(systemName: i < stars ? "star.fill" : "star")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(i < stars ? Color(hex: 0xFFD84D) : .white.opacity(0.18))
+                            }
+                            Spacer()
+                            // Boss indicator
+                            Text(cfg.boss.emoji)
+                                .font(.system(size: 16))
+                                .opacity(locked ? 0.3 : 0.7)
+                        }
+                        .padding(.top, 2)
+                    }
                 }
-                .padding(18)
+                .padding(14)
             }
-            .clipShape(RoundedRectangle(cornerRadius: 18))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
             .overlay(
-                RoundedRectangle(cornerRadius: 18)
+                RoundedRectangle(cornerRadius: 16)
                     .stroke(locked ? Color.white.opacity(0.08) : baseColor.opacity(0.4), lineWidth: 1)
             )
-            .shadow(color: locked ? .clear : baseColor.opacity(0.2), radius: 16)
+            .shadow(color: locked ? .clear : baseColor.opacity(0.2), radius: 12)
             .opacity(locked ? 0.5 : 1)
         }
         .buttonStyle(PressDownStyle())

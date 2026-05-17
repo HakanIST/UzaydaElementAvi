@@ -69,8 +69,18 @@ enum GameConst {
     static let height: CGFloat = 760
     static let playerSize: CGFloat = 38
     static let playerY: CGFloat = 560
-    static let doorYList: [CGFloat] = [700, 1700, 2700]
-    static let worldEndY: CGFloat = 2800
+
+    static func doorPositions(for level: Int) -> [CGFloat] {
+        let cfg = LevelConfig.config(for: level)
+        let count = cfg.doors
+        let worldLen = cfg.worldLength
+        let spacing = worldLen / CGFloat(count + 1)
+        return (1...count).map { CGFloat($0) * spacing }
+    }
+
+    static func worldEnd(for level: Int) -> CGFloat {
+        return LevelConfig.config(for: level).worldLength
+    }
 }
 
 // ── Seeded PRNG (matches JSX behavior closely) ────────────────────
@@ -89,17 +99,20 @@ func generateWorld(level: Int, seed: Double = Double.random(in: 0..<1)) -> GameW
     var obstacles: [Obstacle] = []
     var pickups: [Pickup] = []
 
-    let stepMin = max(40, 130 - level * 8)
-    let stepRand = max(20, 90 - level * 8)
+    let doorYList = GameConst.doorPositions(for: level)
+    let worldEnd = GameConst.worldEnd(for: level)
+    let cfg = LevelConfig.config(for: level)
+
+    let stepMin = max(40, 130 - level * 6)
+    let stepRand = max(20, 90 - level * 6)
     var y: CGFloat = 220
 
-    while y < GameConst.worldEndY - 100 {
-        let nearDoor = GameConst.doorYList.contains { abs($0 - y) < 110 }
+    while y < worldEnd - 100 {
+        let nearDoor = doorYList.contains { abs($0 - y) < 110 }
         if nearDoor { y += 50; continue }
 
         let r = rng.next()
         if r < 0.42 {
-            // Laser/barrier with a gap
             let gapW = 95 + CGFloat(rng.next()) * 25
             let gapX = 18 + CGFloat(rng.next()) * (GameConst.width - gapW - 36)
             let laser = rng.next() < 0.55
@@ -120,7 +133,6 @@ func generateWorld(level: Int, seed: Double = Double.random(in: 0..<1)) -> GameW
                 : nil
             obstacles.append(Obstacle(type: .block(x: x, w: w, moves: moves), y: y, h: 26))
         } else {
-            // diagonal slash (chevron)
             let cx = 80 + CGFloat(rng.next()) * (GameConst.width - 160)
             obstacles.append(Obstacle(type: .block(x: cx - 90, w: 70, moves: nil), y: y, h: 14))
             obstacles.append(Obstacle(type: .block(x: cx + 20, w: 70, moves: nil), y: y + 18, h: 14))
@@ -135,7 +147,7 @@ func generateWorld(level: Int, seed: Double = Double.random(in: 0..<1)) -> GameW
         y += CGFloat(stepMin) + CGFloat(rng.next()) * CGFloat(stepRand)
     }
 
-    let doors = GameConst.doorYList.map { Door(y: $0) }
+    let doors = doorYList.map { Door(y: $0) }
     return GameWorld(obstacles: obstacles, pickups: pickups, doors: doors)
 }
 

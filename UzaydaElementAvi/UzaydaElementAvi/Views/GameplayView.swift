@@ -93,7 +93,7 @@ struct GameplayView: View {
                 HUDView(score: runtime.score, lives: runtime.lives,
                         doorsPassed: runtime.doorsPassed, level: level,
                         accent: pal.accent, accent2: pal.accent2,
-                        progress: min(1, runtime.worldY / GameConst.worldEndY),
+                        progress: min(1, runtime.worldY / GameConst.worldEnd(for: level)),
                         onPause: { game.pause() })
             }
         }
@@ -167,7 +167,7 @@ struct GameplayView: View {
             }
         } else {
             st.worldY += speed * CGFloat(dt)
-            if st.worldY >= GameConst.worldEndY {
+            if st.worldY >= GameConst.worldEnd(for: level) {
                 game.onVictory(score: st.score, atoms: st.atomsCollected)
                 displayLink.stop()
                 return

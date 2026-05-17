@@ -14,10 +14,21 @@ final class GameViewModel: ObservableObject {
     @AppStorage("uea_unlocked") var unlockedLevel: Int = 1
     @AppStorage("uea_total")    var totalScore: Int = 0
     @AppStorage("uea_suit")     var suitHex: String = "#00F0FF"
-    @AppStorage("uea_stars_1")  var starsLevel1: Int = 0
-    @AppStorage("uea_stars_2")  var starsLevel2: Int = 0
-    @AppStorage("uea_stars_3")  var starsLevel3: Int = 0
     @AppStorage("uea_music")    var musicEnabled: Bool = true
+
+    // Stars stored per level (up to 10)
+    @AppStorage("uea_stars_1")  var stars1: Int = 0
+    @AppStorage("uea_stars_2")  var stars2: Int = 0
+    @AppStorage("uea_stars_3")  var stars3: Int = 0
+    @AppStorage("uea_stars_4")  var stars4: Int = 0
+    @AppStorage("uea_stars_5")  var stars5: Int = 0
+    @AppStorage("uea_stars_6")  var stars6: Int = 0
+    @AppStorage("uea_stars_7")  var stars7: Int = 0
+    @AppStorage("uea_stars_8")  var stars8: Int = 0
+    @AppStorage("uea_stars_9")  var stars9: Int = 0
+    @AppStorage("uea_stars_10") var stars10: Int = 0
+
+    static let maxLevel = 10
 
     // ── Live UI state ─────────────────────────────────────────────
     @Published var tweaks: Tweaks = Tweaks()
@@ -58,13 +69,15 @@ final class GameViewModel: ObservableObject {
     func restartLevel() {
         gameKey += 1
         screen = .playing
+        if musicEnabled { AudioManager.shared.startMusic() }
     }
 
     func nextLevel() {
-        let next = min(3, level + 1)
+        let next = min(Self.maxLevel, level + 1)
         level = next
         gameKey += 1
         screen = .playing
+        if musicEnabled { AudioManager.shared.startMusic() }
     }
 
     // ── Puzzle handling ───────────────────────────────────────────
@@ -97,22 +110,33 @@ final class GameViewModel: ObservableObject {
         currentPuzzle = nil
     }
 
-    func onVictory(score: Int, atoms: Int) {
-        Haptics.victory()
-        let completionBonus = 420
-        lastRunScore = score + completionBonus
+    // ── Boss fight ────────────────────────────────────────────────
+    func startBossFight(score: Int, atoms: Int) {
+        lastRunScore = score
         lastRunAtoms = atoms
+        screen = .boss
+    }
+
+    func onBossDefeated() {
+        Haptics.victory()
+        let completionBonus = 420 + level * 50
+        let bossBonus = LevelConfig.config(for: level).boss.hp * 100
+        lastRunScore += completionBonus + bossBonus
         totalScore += lastRunScore
+
         let stars = lastRunScore > 800 ? 3 : (lastRunScore > 500 ? 2 : 1)
-        switch level {
-        case 1: starsLevel1 = max(starsLevel1, stars)
-        case 2: starsLevel2 = max(starsLevel2, stars)
-        case 3: starsLevel3 = max(starsLevel3, stars)
-        default: break
+        setStars(level: level, stars: stars)
+
+        if level + 1 > unlockedLevel {
+            unlockedLevel = min(Self.maxLevel, level + 1)
         }
-        if level + 1 > unlockedLevel { unlockedLevel = min(3, level + 1) }
         AudioManager.shared.stopMusic()
         screen = .victory
+    }
+
+    func onVictory(score: Int, atoms: Int) {
+        // Called when player reaches end of world → triggers boss fight
+        startBossFight(score: score, atoms: atoms)
     }
 
     func onGameOver(score: Int) {
@@ -129,12 +153,38 @@ final class GameViewModel: ObservableObject {
 
     func setSuit(hex: String) { suitHex = hex }
 
+    // ── Stars (10 levels) ─────────────────────────────────────────
     func starsFor(level: Int) -> Int {
         switch level {
-        case 1: return starsLevel1
-        case 2: return starsLevel2
-        case 3: return starsLevel3
+        case 1: return stars1
+        case 2: return stars2
+        case 3: return stars3
+        case 4: return stars4
+        case 5: return stars5
+        case 6: return stars6
+        case 7: return stars7
+        case 8: return stars8
+        case 9: return stars9
+        case 10: return stars10
         default: return 0
+        }
+    }
+
+    private func setStars(level: Int, stars: Int) {
+        let current = starsFor(level: level)
+        let best = max(current, stars)
+        switch level {
+        case 1: stars1 = best
+        case 2: stars2 = best
+        case 3: stars3 = best
+        case 4: stars4 = best
+        case 5: stars5 = best
+        case 6: stars6 = best
+        case 7: stars7 = best
+        case 8: stars8 = best
+        case 9: stars9 = best
+        case 10: stars10 = best
+        default: break
         }
     }
 }

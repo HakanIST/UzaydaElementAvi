@@ -71,7 +71,7 @@ struct VictoryView: View {
                 VStack(spacing: 10) {
                     NeonButton(title: "Sonraki Sektör ►", size: .lg,
                                accent: Color(hex: 0xAAFF00), accent2: pal.accent) {
-                        if game.level < 3 { game.nextLevel() } else { game.returnToMenu() }
+                        if game.level < GameViewModel.maxLevel { game.nextLevel() } else { game.returnToMenu() }
                     }
                     NeonButton(title: "Ana Menüye Dön", size: .sm, variant: .ghost,
                                accent: pal.accent, accent2: pal.accent2) {

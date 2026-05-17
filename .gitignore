@@ -18,3 +18,11 @@ build/
 *.dSYM
 Pods/
 .build/
+
+# Secrets & keys
+*.p8
+*.p12
+.secrets
+
+# Large original media (converted versions in project)
+Element\ Av??.mp3

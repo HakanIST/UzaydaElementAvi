@@ -29,6 +29,8 @@
 		D3E4F5A6B7C8091A2B3C4D5E /* ScoresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F5A6B7C8091A2B3C4D5E6F /* ScoresView.swift */; };
 		F1A2B3C4D5E6F7081920ABCD /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3C4D5E6F7081920ABCDEF /* SplashView.swift */; };
 		B1C2D3E4F5061728394A5B6C /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3E4F5061728394A5B6C7D /* AudioManager.swift */; };
+		E1F2A3B4C5D6071829304A5B /* BossView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A3B4C5D6071829304A5B6C /* BossView.swift */; };
+		D2E3F4A5B6C7081920314B5C /* LevelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F4A5B6C7081920314B5C6D /* LevelConfig.swift */; };
 		A1B2C3D4E5F60718293A4B5C /* element_avi_bgm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D1E2F3041526374859607182 /* element_avi_bgm.m4a */; };
 		4CCAA5537422034D759F1BA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE386E8155E56716398D48DA /* Assets.xcassets */; };
 		8129F14CCED59281CFD62337 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2FEBCDB414EF6763D4EEE2C /* Preview Assets.xcassets */; };
@@ -57,6 +59,8 @@
 		E4F5A6B7C8091A2B3C4D5E6F /* ScoresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScoresView.swift"; sourceTree = "<group>"; };
 		A2B3C4D5E6F7081920ABCDEF /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplashView.swift"; sourceTree = "<group>"; };
 		C2D3E4F5061728394A5B6C7D /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioManager.swift"; sourceTree = "<group>"; };
+		F2A3B4C5D6071829304A5B6C /* BossView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BossView.swift"; sourceTree = "<group>"; };
+		E3F4A5B6C7081920314B5C6D /* LevelConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelConfig.swift"; sourceTree = "<group>"; };
 		D1E2F3041526374859607182 /* element_avi_bgm.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "element_avi_bgm.m4a"; sourceTree = "<group>"; };
 		AE386E8155E56716398D48DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
 		C2FEBCDB414EF6763D4EEE2C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 				97BAA79BCFC1B8246FFCDDD4 /* GameRuntime.swift */,
 				B2C3D4E5F6070819202ABBCC /* Haptics.swift */,
 				C2D3E4F5061728394A5B6C7D /* AudioManager.swift */,
+				E3F4A5B6C7081920314B5C6D /* LevelConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -134,6 +139,7 @@
 				37D5E0C75135AE1200FA6C3E /* GameplayView.swift */,
 				E4F5A6B7C8091A2B3C4D5E6F /* ScoresView.swift */,
 				A2B3C4D5E6F7081920ABCDEF /* SplashView.swift */,
+				F2A3B4C5D6071829304A5B6C /* BossView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -240,6 +246,8 @@
 				D3E4F5A6B7C8091A2B3C4D5E /* ScoresView.swift in Sources */,
 				F1A2B3C4D5E6F7081920ABCD /* SplashView.swift in Sources */,
 				B1C2D3E4F5061728394A5B6C /* AudioManager.swift in Sources */,
+				E1F2A3B4C5D6071829304A5B /* BossView.swift in Sources */,
+				D2E3F4A5B6C7081920314B5C /* LevelConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,7 +323,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = RZD6H2LE2U;
 				DEVELOPMENT_ASSET_PATHS = "\"UzaydaElementAvi/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
@@ -346,7 +354,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = RZD6H2LE2U;
 				DEVELOPMENT_ASSET_PATHS = "\"UzaydaElementAvi/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
