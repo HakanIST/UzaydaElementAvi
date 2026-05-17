@@ -59,13 +59,13 @@ struct LevelConfig {
             id: 7, name: "Güneş Fırtınası", subtitle: "Çarpma İleri",
             icon: "sun.max.fill", accentHex: 0xFF9100,
             doors: 4, speed: 1.3, worldLength: 3500,
-            boss: BossConfig(name: "Güneş Tanrısı", emoji: "🌞", hp: 6, timePenalty: 3, hideOptions: true)
+            boss: BossConfig(name: "Güneş Komutanı", emoji: "🌞", hp: 6, timePenalty: 3, hideOptions: true)
         ),
         LevelConfig(
             id: 8, name: "Kuasar Labirenti", subtitle: "Karma Problemler",
             icon: "hurricane", accentHex: 0x00BFA5,
             doors: 4, speed: 1.35, worldLength: 3800,
-            boss: BossConfig(name: "Kuasar Büyücüsü", emoji: "🧙‍♂️", hp: 6, timePenalty: 4, hideOptions: true)
+            boss: BossConfig(name: "Kuasar Ustası", emoji: "🛡️", hp: 6, timePenalty: 4, hideOptions: true)
         ),
         LevelConfig(
             id: 9, name: "Kara Delik", subtitle: "Bölme İleri",
