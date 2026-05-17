@@ -17,6 +17,7 @@ final class GameViewModel: ObservableObject {
     @AppStorage("uea_stars_1")  var starsLevel1: Int = 0
     @AppStorage("uea_stars_2")  var starsLevel2: Int = 0
     @AppStorage("uea_stars_3")  var starsLevel3: Int = 0
+    @AppStorage("uea_music")    var musicEnabled: Bool = true
 
     // ── Live UI state ─────────────────────────────────────────────
     @Published var tweaks: Tweaks = Tweaks()
@@ -43,14 +44,15 @@ final class GameViewModel: ObservableObject {
     func goPlay()              { screen = .levels }
     func openCharacter()       { screen = .character }
     func openScores()          { screen = .scores }
-    func returnToMenu()        { screen = .menu }
-    func pause()               { screen = .pause }
-    func resume()              { screen = .playing }
+    func returnToMenu()        { screen = .menu; AudioManager.shared.stopMusic() }
+    func pause()               { screen = .pause; AudioManager.shared.pauseMusic() }
+    func resume()              { screen = .playing; if musicEnabled { AudioManager.shared.resumeMusic() } }
 
     func pickLevel(_ id: Int) {
         level = id
         gameKey += 1
         screen = .playing
+        if musicEnabled { AudioManager.shared.startMusic() }
     }
 
     func restartLevel() {
@@ -81,9 +83,11 @@ final class GameViewModel: ObservableObject {
         if correct {
             gameRuntime?.openDoor(idx: pp.doorIdx)
             Haptics.doorOpen()
+            AudioManager.shared.playCorrect()
         } else {
             gameRuntime?.loseLife()
             Haptics.wrong()
+            AudioManager.shared.playCrash()
             // If lives exhausted, transition to game over BEFORE dismissing
             // puzzle — prevents the game loop from restarting on the same door.
             if (gameRuntime?.lives ?? 0) <= 0 {
@@ -107,12 +111,14 @@ final class GameViewModel: ObservableObject {
         default: break
         }
         if level + 1 > unlockedLevel { unlockedLevel = min(3, level + 1) }
+        AudioManager.shared.stopMusic()
         screen = .victory
     }
 
     func onGameOver(score: Int) {
         guard screen != .gameOver else { return }
         lastRunScore = score
+        AudioManager.shared.stopMusic()
         screen = .gameOver
     }
 

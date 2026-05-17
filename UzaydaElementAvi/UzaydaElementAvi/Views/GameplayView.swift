@@ -186,6 +186,7 @@ struct GameplayView: View {
                     st.lives -= 1
                     st.invulnUntil = now + GameRuntime.invulnDuration
                     Haptics.hit()
+                    AudioManager.shared.playCrash()
                     // onChange(of: runtime.lives) handles game-over routing
                     if st.lives <= 0 {
                         displayLink.stop()

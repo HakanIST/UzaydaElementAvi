@@ -28,6 +28,8 @@
 		6B379AC89C77ACB05CD7CD82 /* GameplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5E0C75135AE1200FA6C3E /* GameplayView.swift */; };
 		D3E4F5A6B7C8091A2B3C4D5E /* ScoresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F5A6B7C8091A2B3C4D5E6F /* ScoresView.swift */; };
 		F1A2B3C4D5E6F7081920ABCD /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3C4D5E6F7081920ABCDEF /* SplashView.swift */; };
+		B1C2D3E4F5061728394A5B6C /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3E4F5061728394A5B6C7D /* AudioManager.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* element_avi_bgm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D1E2F3041526374859607182 /* element_avi_bgm.m4a */; };
 		4CCAA5537422034D759F1BA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE386E8155E56716398D48DA /* Assets.xcassets */; };
 		8129F14CCED59281CFD62337 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2FEBCDB414EF6763D4EEE2C /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -54,6 +56,8 @@
 		37D5E0C75135AE1200FA6C3E /* GameplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameplayView.swift"; sourceTree = "<group>"; };
 		E4F5A6B7C8091A2B3C4D5E6F /* ScoresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScoresView.swift"; sourceTree = "<group>"; };
 		A2B3C4D5E6F7081920ABCDEF /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplashView.swift"; sourceTree = "<group>"; };
+		C2D3E4F5061728394A5B6C7D /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioManager.swift"; sourceTree = "<group>"; };
+		D1E2F3041526374859607182 /* element_avi_bgm.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "element_avi_bgm.m4a"; sourceTree = "<group>"; };
 		AE386E8155E56716398D48DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
 		C2FEBCDB414EF6763D4EEE2C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C4AD6250DCF003F8FCBBAFA0 /* UzaydaElementAvi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UzaydaElementAvi.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +99,7 @@
 				0BAE3B150B8EC55F3FAF0C01 /* Models */,
 				27E84255ED83F111C48120AC /* Views */,
 				BF08892EA1A643931974AE65 /* Preview Content */,
+				D1E2F3041526374859607182 /* element_avi_bgm.m4a */,
 			);
 			path = UzaydaElementAvi;
 			sourceTree = "<group>";
@@ -109,6 +114,7 @@
 				DAAAEDDE60FE7C5F0A9B145E /* GameViewModel.swift */,
 				97BAA79BCFC1B8246FFCDDD4 /* GameRuntime.swift */,
 				B2C3D4E5F6070819202ABBCC /* Haptics.swift */,
+				C2D3E4F5061728394A5B6C7D /* AudioManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -200,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CCAA5537422034D759F1BA8 /* Assets.xcassets in Resources */,
+				A1B2C3D4E5F60718293A4B5C /* element_avi_bgm.m4a in Resources */,
 				8129F14CCED59281CFD62337 /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +239,7 @@
 				6B379AC89C77ACB05CD7CD82 /* GameplayView.swift in Sources */,
 				D3E4F5A6B7C8091A2B3C4D5E /* ScoresView.swift in Sources */,
 				F1A2B3C4D5E6F7081920ABCD /* SplashView.swift in Sources */,
+				B1C2D3E4F5061728394A5B6C /* AudioManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +315,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = RZD6H2LE2U;
 				DEVELOPMENT_ASSET_PATHS = "\"UzaydaElementAvi/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
@@ -338,7 +346,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = RZD6H2LE2U;
 				DEVELOPMENT_ASSET_PATHS = "\"UzaydaElementAvi/Preview Content\"";
 				ENABLE_PREVIEWS = YES;

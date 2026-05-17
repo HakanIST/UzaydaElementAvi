@@ -52,6 +52,26 @@ struct MainMenuView: View {
                 .padding(.top, 18)
 
                 Spacer()
+
+                // Music toggle
+                Button {
+                    game.musicEnabled.toggle()
+                    if !game.musicEnabled {
+                        AudioManager.shared.stopMusic()
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: game.musicEnabled ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                            .font(.system(size: 16))
+                        Text(game.musicEnabled ? "Müzik Açık" : "Müzik Kapalı")
+                            .font(.system(size: 13, weight: .medium))
+                    }
+                    .foregroundColor(.white.opacity(0.55))
+                    .padding(.horizontal, 16).padding(.vertical, 8)
+                    .background(Capsule().fill(Color.white.opacity(0.06)))
+                    .overlay(Capsule().stroke(Color.white.opacity(0.12)))
+                }
+                .padding(.bottom, 40)
             }
             .padding(.top, 60)
         }
